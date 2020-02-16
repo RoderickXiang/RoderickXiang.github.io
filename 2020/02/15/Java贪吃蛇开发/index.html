@@ -79,10 +79,14 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Roderick&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="一切先从核心玩法开始 如何运动 控制蛇头的方向   游戏界面 绘制游戏内容 让一切都动起来 获取键盘事件   游戏功能实现 穿墙效果 蛇的身子变长（重点） 碰撞检测 检测吃食物 计分系统     一切先从核心玩法开始首先贪吃蛇的运动是发生在一个规范的矩阵中，而矩阵中的每一方格就是蛇的身子，而蛇的运动就是一次一次更新正方形的位置，然后通过panel绘制上去所以我们使用两个数组来储存贪吃蛇的位置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java贪吃蛇开发">
+<meta property="og:url" content="http://yoursite.com/2020/02/15/Java%E8%B4%AA%E5%90%83%E8%9B%87%E5%BC%80%E5%8F%91/index.html">
 <meta property="og:site_name" content="Roderick&#39;s blog">
+<meta property="og:description" content="一切先从核心玩法开始 如何运动 控制蛇头的方向   游戏界面 绘制游戏内容 让一切都动起来 获取键盘事件   游戏功能实现 穿墙效果 蛇的身子变长（重点） 碰撞检测 检测吃食物 计分系统     一切先从核心玩法开始首先贪吃蛇的运动是发生在一个规范的矩阵中，而矩阵中的每一方格就是蛇的身子，而蛇的运动就是一次一次更新正方形的位置，然后通过panel绘制上去所以我们使用两个数组来储存贪吃蛇的位置">
+<meta property="article:published_time" content="2020-02-15T15:40:41.024Z">
+<meta property="article:modified_time" content="2020-02-16T14:01:36.554Z">
 <meta property="article:author" content="Roderick Xiang">
 <meta name="twitter:card" content="summary">
 
@@ -114,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/02/15/Java贪吃蛇开发/"/>
 
 
 
 
 
-  <title>Roderick's blog</title>
+  <title>Java贪吃蛇开发 | Roderick's blog</title>
   
 
 
@@ -139,8 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -223,9 +226,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -255,9 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/15/Java%E8%B4%AA%E5%90%83%E8%9B%87%E5%BC%80%E5%8F%91/" itemprop="url">Java贪吃蛇开发</a></h1>
+          <h1 class="post-title" itemprop="name headline">Java贪吃蛇开发</h1>
         
 
         <div class="post-meta">
@@ -307,9 +308,7 @@
       
 
       
-        
-          
-            <!-- TOC -->
+        <!-- TOC -->
 
 <ul>
 <li><a href="#一切先从核心玩法开始">一切先从核心玩法开始</a><ul>
@@ -358,8 +357,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkEatFood</span><span class="params">(Food food)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (snakeX[<span class="number">0</span>] == food.normalX &amp;&amp; snakeY[<span class="number">0</span>] == food.normalY) &#123;</span><br><span class="line">        food.isEat = <span class="keyword">true</span>;</span><br><span class="line">        getLonger(food);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (snakeX[<span class="number">0</span>] == food.bonusX &amp;&amp; snakeY[<span class="number">0</span>] == food.bonusY &amp;&amp; food.hasBonus) &#123;</span><br><span class="line">        food.isBonusEat = <span class="keyword">true</span>;</span><br><span class="line">        food.hasBonus = <span class="keyword">false</span>;</span><br><span class="line">        getLonger(food);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="计分系统"><a href="#计分系统" class="headerlink" title="计分系统"></a>计分系统</h4><p>使用BufferReader和BufferWriter读写记录，获取最高分<br></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeResult</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    BufferedWriter bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"记录.txt"</span>, <span class="keyword">true</span>));</span><br><span class="line">    bw.write(<span class="string">"player"</span> + <span class="string">"\t"</span> + point);</span><br><span class="line">    bw.newLine();</span><br><span class="line">    bw.close();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">readBestResult</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"记录.txt"</span>));</span><br><span class="line">    String line;</span><br><span class="line">    <span class="keyword">int</span> score;</span><br><span class="line">    <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String[] tmp = line.split(<span class="string">"\t"</span>);</span><br><span class="line">        score = Integer.parseInt(tmp[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">if</span> (score &gt; bestScore) &#123;</span><br><span class="line">            bestScore = score;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
       
     </div>
     
@@ -376,132 +373,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/13/%E5%9C%A8%E8%A5%BF%E9%83%A8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%97%A5%E5%AD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Roderick Xiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roderick's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/13/%E5%9C%A8%E8%A5%BF%E9%83%A8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%97%A5%E5%AD%90/" itemprop="url">在西部的那些日子</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-13T23:10:42+08:00">
-                2020-02-13
-              </time>
+              <a href="/2020/02/13/%E5%9C%A8%E8%A5%BF%E9%83%A8%E7%9A%84%E9%82%A3%E4%BA%9B%E6%97%A5%E5%AD%90/" rel="next" title="在西部的那些日子">
+                <i class="fa fa-chevron-left"></i> 在西部的那些日子
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="在西部的那些日子"><a href="#在西部的那些日子" class="headerlink" title="在西部的那些日子"></a>在西部的那些日子</h1><p>&emsp;&emsp;对于荒野大镖客：救赎2的入坑有三点一是因为R星就是R星，另一部分是应为塞尔达旷野之息续作开发的消息谈到了，借鉴了荒野大镖客2中剧情对于整个游戏过程的重要性。剧情对于大表哥2来说是十分重要的，剧情发展对我来说通常是无所谓的，但是这次，也是唯一一次我在游戏中严重受到剧情的干扰，在玩之前不小心在B站云通关了，通常来说这没什么，但是对于荒野大镖客2来讲影响实在太大了。谁是叛徒，谁在哪里要领盒饭了，全都知道，太影响游戏体验，但是这应该不是我最后一次云通关，因为B站上剧情的诱惑力实在是太大了。<br><br>&emsp;&emsp;还有一点非常吸引我的毫无疑问是它的表现力，荒野大镖客2的表现力真的太强了，R星把range引擎发挥到了极致，创造出来了下一个世代的游戏，荒野大镖客2在ps4的末代发布，就像当年的gta5在ps3的末代发布一样，虽然pc版本跳了很久的票，但好歹摘了个“教科书般的优化”的游戏名号，也让千千万万平民玩家可以去洛圣都闯荡一下，当年也辛亏有这样的优化才能让我的gt920m能在25帧下“流畅”运行。荒野大镖客2的优化肯定是算不上好的，但是再怎么说也比gta4要强太多了，gta4在当年就是不想让你玩的存在，据说就连当年的神机都无法做到欢乐游玩，虽然我不太清楚哪个时代，但是今天的荒野大镖客2好歹能玩2080力大飞砖，而我的gtx1650也终于能打破cemu模拟器50%占用的枷锁（模拟器比较看重cpu,有来自cpu方面的瓶颈），但也只能在30帧下走中高了，优化就是中下的水平。但还有很多玩家遇到了根本无发愉快玩耍的情况（闪退，打不开之类的）。大表哥2在这方面倒是没太为难我，就是开始的时候虚拟内存设置太小了导致闪退。坐在马上看着阳光在树林中产生的丁达尔效应，在没有光线追踪的大表哥里难道还不满足吗？<br><br>&emsp;&emsp;在剧情上面荒野大镖客：救赎2其实是荒野大镖客：救赎1的前传，虽然玩2不需要1的剧情但其中联系还算比较紧密。在游戏的结尾上，2的处理方式与1如出一辙。R星在游戏的理念上认为开放世界就是要在结束任务后还能继续对世界进行探索，所以在亚瑟完成他的救赎之路后，还需要使用约翰完成复仇就像在1中约翰完成成他的救赎之后，需要杰克完成复仇一样。当你在2中看着陌生的约翰时就像1中看着陌生的杰克一样。而荒野之息在结尾上的处理就感觉很有问题。<br><br>&emsp;&emsp;荒野大镖客：救赎2在国内给我的感觉就是典型的叫好不叫座，可能是因为我们这边对于西部文化不感冒，或许又是因为大多数玩家太过于浮躁，完全无法理解这种慢节奏的，骑马模拟器游戏。在所有人都嚷嚷着要gta6的时候，荒野大镖客：救赎2并没有得到应有的拥护度，gta5还在卖呢！哦我的上帝你可瞧瞧吧，那可是13年的游戏啊。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -511,394 +404,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Roderick Xiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roderick's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/07/%E6%95%B0%E7%BB%84/" itemprop="url">数组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T20:54:52+08:00">
-                2020-02-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[TOC]</p>
-<h4 id="数组声明创建"><a href="#数组声明创建" class="headerlink" title="数组声明创建"></a>数组声明创建</h4><h5 id="声明数组"><a href="#声明数组" class="headerlink" title="声明数组"></a>声明数组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataType[] array;  <span class="comment">//首选方法</span></span><br><span class="line">dataType array[];    <span class="comment">//C语言适应方法</span></span><br></pre></td></tr></table></figure>
-<h5 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataType[] array = <span class="keyword">new</span> dataType[arraySize]  <span class="comment">//一步到位</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> array;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayDemon01</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] numbers;</span><br><span class="line">        numbers = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">        numbers[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        numbers[<span class="number">1</span>] = <span class="number">2</span>;</span><br><span class="line">        numbers[<span class="number">2</span>] = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x : numbers) &#123;</span><br><span class="line">            System.out.println(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><p>1.静态初始化<br><br>2.动态初始化</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> array;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demon02</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//静态初始化：创建 + 初始化</span></span><br><span class="line">        <span class="keyword">int</span>[] a = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//动态初始化：包含默认初始化</span></span><br><span class="line">        <span class="keyword">int</span>[] b = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="数组高级遍历"><a href="#数组高级遍历" class="headerlink" title="数组高级遍历"></a>数组高级遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> x : array)&#123;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/pip%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Roderick Xiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roderick's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/07/pip%E5%91%BD%E4%BB%A4/" itemprop="url">pip命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T20:54:12+08:00">
-                2020-02-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h4><p>pip install &lt;包名&gt;</p>
-<h4 id="查看已安装的包"><a href="#查看已安装的包" class="headerlink" title="查看已安装的包"></a>查看已安装的包</h4><p>pip list</p>
-<h4 id="查看可升级的的包"><a href="#查看可升级的的包" class="headerlink" title="查看可升级的的包"></a>查看可升级的的包</h4><p>pip list -o</p>
-<h4 id="升级"><a href="#升级" class="headerlink" title="升级"></a>升级</h4><p>pip install -U &lt;包名&gt;</p>
-<h4 id="卸载包"><a href="#卸载包" class="headerlink" title="卸载包"></a>卸载包</h4><p>pip uninstall &lt;包名&gt;</p>
-<h4 id="指定单次安装源"><a href="#指定单次安装源" class="headerlink" title="指定单次安装源"></a>指定单次安装源</h4><p>pip install &lt;包名&gt; -i <a href="https://mirrors.aliyun.com/pypi/simple" target="_blank" rel="noopener">https://mirrors.aliyun.com/pypi/simple</a></p>
-<h4 id="显示包所在的位置"><a href="#显示包所在的位置" class="headerlink" title="显示包所在的位置"></a>显示包所在的位置</h4><p>pip show &lt;包名&gt;</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Roderick Xiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roderick's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/07/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T17:27:18+08:00">
-                2020-02-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -906,6 +416,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -926,8 +440,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -985,6 +508,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一切先从核心玩法开始"><span class="nav-number">1.</span> <span class="nav-text">一切先从核心玩法开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何运动"><span class="nav-number">1.1.</span> <span class="nav-text">如何运动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制蛇头的方向"><span class="nav-number">1.2.</span> <span class="nav-text">控制蛇头的方向</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#游戏界面"><span class="nav-number">2.</span> <span class="nav-text">游戏界面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#绘制游戏内容"><span class="nav-number">2.1.</span> <span class="nav-text">绘制游戏内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#让一切都动起来"><span class="nav-number">2.2.</span> <span class="nav-text">让一切都动起来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取键盘事件"><span class="nav-number">2.3.</span> <span class="nav-text">获取键盘事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#游戏功能实现"><span class="nav-number">3.</span> <span class="nav-text">游戏功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#穿墙效果"><span class="nav-number">3.1.</span> <span class="nav-text">穿墙效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#蛇的身子变长（重点）"><span class="nav-number">3.2.</span> <span class="nav-text">蛇的身子变长（重点）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#碰撞检测"><span class="nav-number">3.3.</span> <span class="nav-text">碰撞检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检测吃食物"><span class="nav-number">3.4.</span> <span class="nav-text">检测吃食物</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计分系统"><span class="nav-number">3.5.</span> <span class="nav-text">计分系统</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1125,6 +664,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="整体框架 用户数据 重要功能实现 管理员登入 过滤器(Filter)   分页查询所有用户数据     整体框架为了保证不滥用jsp所以采用三层框架，分别为页面展示层，逻辑操作层，和数据库访问层(Database Access Object)，其实简单的增删改查的操作都可以交给数据库，所以基本上没有什么逻辑操作。对于数据的操作为了在未来更好的添加功能使用实现接口的方式，UserService">
+  <meta name="description" content="整 用户数据 重要功能实现 管理员登入 过滤器(Filter)   分页查询所有用户数据 增加新的数据 更改用户数据 删除用户数据 分页查询用户数据 SQL语句 核心实现       为了保证不滥用jsp所以采用三层框架，分别为页面展示层，逻辑操作层，和数据库访问层(Database Access Object)，其实简单的增删改查的操作都可以交给数据库，所以基本上没有什么逻辑操作。对于数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用户信息列表展示">
 <meta property="og:url" content="http://yoursite.com/2020/03/13/%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA/index.html">
 <meta property="og:site_name" content="Roderick&#39;s blog">
-<meta property="og:description" content="整体框架 用户数据 重要功能实现 管理员登入 过滤器(Filter)   分页查询所有用户数据     整体框架为了保证不滥用jsp所以采用三层框架，分别为页面展示层，逻辑操作层，和数据库访问层(Database Access Object)，其实简单的增删改查的操作都可以交给数据库，所以基本上没有什么逻辑操作。对于数据的操作为了在未来更好的添加功能使用实现接口的方式，UserService">
+<meta property="og:description" content="整 用户数据 重要功能实现 管理员登入 过滤器(Filter)   分页查询所有用户数据 增加新的数据 更改用户数据 删除用户数据 分页查询用户数据 SQL语句 核心实现       为了保证不滥用jsp所以采用三层框架，分别为页面展示层，逻辑操作层，和数据库访问层(Database Access Object)，其实简单的增删改查的操作都可以交给数据库，所以基本上没有什么逻辑操作。对于数据">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-13T12:51:49.840Z">
-<meta property="article:modified_time" content="2020-03-14T15:22:26.477Z">
+<meta property="article:modified_time" content="2020-03-15T15:04:01.105Z">
 <meta property="article:author" content="Roderick Xiang">
 <meta name="twitter:card" content="summary">
 
@@ -178,7 +178,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-14 23:22:26" itemprop="dateModified" datetime="2020-03-14T23:22:26+08:00">2020-03-14</time>
+                <time title="修改时间：2020-03-15 23:04:01" itemprop="dateModified" datetime="2020-03-15T23:04:01+08:00">2020-03-15</time>
               </span>
 
           
@@ -195,7 +195,7 @@
         <!-- TOC -->
 
 <ul>
-<li><a href="#整体框架">整体框架</a></li>
+<li><a href="#整---toc---">整<!-- TOC --></a></li>
 <li><a href="#用户数据">用户数据</a></li>
 <li><a href="#重要功能实现">重要功能实现</a><ul>
 <li><a href="#管理员登入">管理员登入</a><ul>
@@ -203,16 +203,25 @@
 </ul>
 </li>
 <li><a href="#分页查询所有用户数据">分页查询所有用户数据</a></li>
+<li><a href="#增加新的数据">增加新的数据</a></li>
+<li><a href="#更改用户数据">更改用户数据</a></li>
+<li><a href="#删除用户数据">删除用户数据</a></li>
+<li><a href="#分页查询用户数据">分页查询用户数据</a><ul>
+<li><a href="#sql语句">SQL语句</a></li>
+<li><a href="#核心实现">核心实现</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="整体框架"><a href="#整体框架" class="headerlink" title="整体框架"></a>整体框架</h2><p>为了保证不滥用jsp所以采用三层框架，分别为页面展示层，逻辑操作层，和数据库访问层(Database Access Object)，其实简单的增删改查的操作都可以交给数据库，所以基本上没有什么逻辑操作。<br><br>对于数据的操作为了在未来更好的添加功能使用实现接口的方式，UserServices和AdministratorService<br></p>
+<p>为了保证不滥用jsp所以采用三层框架，分别为页面展示层，逻辑操作层，和数据库访问层(Database Access Object)，其实简单的增删改查的操作都可以交给数据库，所以基本上没有什么逻辑操作。<br><br>对于数据的操作为了在未来更好的添加功能使用实现接口的方式，UserServices和AdministratorService<br></p>
 <h2 id="用户数据"><a href="#用户数据" class="headerlink" title="用户数据"></a>用户数据</h2><p>对于查询的数据使用User对象的方式进行封装，在直接获取属性就行<br></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line"><span class="keyword">private</span> String name;</span><br><span class="line"><span class="keyword">private</span> String gender;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"><span class="keyword">private</span> String address;</span><br><span class="line"><span class="keyword">private</span> String qq;</span><br><span class="line"><span class="keyword">private</span> String email;</span><br></pre></td></tr></table></figure>
 <h2 id="重要功能实现"><a href="#重要功能实现" class="headerlink" title="重要功能实现"></a>重要功能实现</h2><h3 id="管理员登入"><a href="#管理员登入" class="headerlink" title="管理员登入"></a>管理员登入</h3><pre class="mermaid">graph LR
-浏览器发起request请求-->Servlet进行判断
-Servlet进行判断-->允许访问index.jsp</pre>
+浏览器发起request请求-->servlet{Servlet进行判断}
+servlet{Servlet进行判断}--有loginAdministrator返回值-->允许访问index.jsp
+servlet{Servlet进行判断}--没有,转发错误信息-->login.jsp</pre>
 <p>登入在数据库中需要一张管理员的表，同样封装管理员对象<br></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String username;</span><br><span class="line"><span class="keyword">private</span> String password;</span><br></pre></td></tr></table></figure>
 <p>首先通过jsp页面展示html和验证码（通过CheckCodeServlet获取），老样子还是先判断激活码。<br></p>
@@ -221,7 +230,31 @@ Servlet进行判断-->允许访问index.jsp</pre>
     A[来自浏览器的请求] --> C{Fliter进行拦截是否含有user属性}
     C -->|有| D[放行]
     C -->|无| E[转发到登入页面]</pre>
-<h3 id="分页查询所有用户数据"><a href="#分页查询所有用户数据" class="headerlink" title="分页查询所有用户数据"></a>分页查询所有用户数据</h3>
+<h3 id="分页查询所有用户数据"><a href="#分页查询所有用户数据" class="headerlink" title="分页查询所有用户数据"></a>分页查询所有用户数据</h3><p><strong>SQL:selset * from person_data</strong><br><br>由于要实现分页的要求所以前端与后端要进行一些数据的交换以达到效果，这里通过封装一个pageBean<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> totalCount; <span class="comment">//总记录数  （数据库）</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> totalPage;  <span class="comment">//总页码数  （数据库）</span></span><br><span class="line"><span class="keyword">private</span> List&lt;T&gt; list;  <span class="comment">//每页的数据 （数据库返回）</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> currentPage;    <span class="comment">//当前的页码    （前端）</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> rows;   <span class="comment">//每页显示的记录数  （servlet规定）</span></span><br></pre></td></tr></table></figure>
+<p>通过这些数据就能得知每一页应该显示什么内容<br><br>这里稍微画一下图表明一下三层架构：</p>
+<pre class="mermaid">graph LR
+    Servlet-->UserService
+    UserService-->UserDao</pre>
+<h3 id="增加新的数据"><a href="#增加新的数据" class="headerlink" title="增加新的数据"></a>增加新的数据</h3><p><strong>SQL:insert into person_data values(null,?,?,?,?,?,?)</strong><br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">"insert into person_data values(null,?,?,?,?,?,?)"</span>;</span><br><span class="line">jdbcTemplate.update(sql,</span><br><span class="line">        newUser.getName(), newUser.getGender(), newUser.getAge(), newUser.getAddress(), newUser.getQq(), newUser.getEmail());</span><br></pre></td></tr></table></figure>
+<p>在这里只需要获取来自前端表单提交的数据，再提交给服务器就行<br><br>直接使用BeanUtils做封装，减少代码量<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String[]&gt; map = request.getParameterMap();</span><br><span class="line">User newUser = <span class="keyword">new</span> User();</span><br><span class="line"><span class="comment">//自动封装</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    BeanUtils.populate(newUser, map);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IllegalAccessException | InvocationTargetException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更改用户数据"><a href="#更改用户数据" class="headerlink" title="更改用户数据"></a>更改用户数据</h3><p><strong>SQL:update person_data set name = ?,gender = ?,age = ?,address = ?,qq = ?,email = ? where id = ?</strong><br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateUser</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">    String sql = <span class="string">"update person_data set name = ?,gender = ?,age = ?,address = ?,qq = ?,email = ? where id = ?"</span>;</span><br><span class="line">    jdbcTemplate.update(sql,</span><br><span class="line">            user.getName(), user.getGender(), user.getAge(), user.getAddress(), user.getQq(), user.getEmail(), user.getId());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个要比新添加一个要难一些，而且要实现回显用户的数据，所以逻辑会稍微有点复杂<br></p>
+<pre class="mermaid">graph LR
+    list.jsp--传递id-->FindUserServlet
+    FindUserServlet--转发User数据-->updata.jsp
+    updata.jsp--传递User数据-->UpdataUserServlet
+    UpdataUserServlet--重定项-->ListUserByPageServlet</pre>
+<p>在第二次传递User数据的时候会发现表单中并没有id这个属性，所以这里耍个小聪明，在表单中隐藏id，有了id才能在数据库中做修改<br></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--隐藏的id信息--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"$&#123;requestScope.user.id&#125;"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="删除用户数据"><a href="#删除用户数据" class="headerlink" title="删除用户数据"></a>删除用户数据</h3><p><strong>SQL:delete from person_data where id = ?</strong><br><br>这个好说，拿到id就行<br></p>
+<h3 id="分页查询用户数据"><a href="#分页查询用户数据" class="headerlink" title="分页查询用户数据"></a>分页查询用户数据</h3><h4 id="SQL语句"><a href="#SQL语句" class="headerlink" title="SQL语句"></a>SQL语句</h4><p><strong>SQL:select * from person_data where 1 = 1 and key(name) like ‘%模糊查找%’ [and key(name) like ‘%模糊查找%’] limit start rows</strong><br><br>在这里又要实现用户的模糊查询，还要实现分页查询的功能就会比较麻烦<br><br>首先从sql开始说起：<br><br>1.由于模糊查询的条件有三个但是又不能写死，因为用户可以不填，而且还要进行分页，所以这里采用拼接sql的方式<br><br>2.查找的条件使用where 1 = 1 的方式这样可以直接在后面拼接，这个也算一个小技巧吧<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">findUserByPage</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> rows, Map&lt;String, String[]&gt; condition)</span> </span>&#123;</span><br><span class="line">    String sql = <span class="string">"select * from person_data where 1 = 1 "</span>;</span><br><span class="line">    <span class="comment">//拼接sql</span></span><br><span class="line">    StrBuilder sqlStrBuilder = <span class="keyword">new</span> StrBuilder(sql);</span><br><span class="line">    List&lt;Object&gt; params = <span class="keyword">new</span> ArrayList&lt;&gt;();    <span class="comment">//参数列表</span></span><br><span class="line">    <span class="keyword">for</span> (String key : condition.keySet()) &#123;   <span class="comment">//遍历条件</span></span><br><span class="line">        String value = condition.get(key)[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">//排除不需要的参数</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"currentPage"</span>.equals(key) || <span class="string">"rows"</span>.equals(key)) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断有值</span></span><br><span class="line">        <span class="keyword">if</span> (value != <span class="keyword">null</span> &amp;&amp; !<span class="string">""</span>.equals(value)) &#123;</span><br><span class="line">            sqlStrBuilder.append(<span class="string">" and "</span>).append(key).append(<span class="string">" like ? "</span>);</span><br><span class="line">            params.add(<span class="string">"%"</span> + value + <span class="string">"%"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sqlStrBuilder.append(<span class="string">" limit ?, ? "</span>);</span><br><span class="line">    params.add(start);</span><br><span class="line">    params.add(rows);</span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.query(sqlStrBuilder.toString(), <span class="keyword">new</span> BeanPropertyRowMapper&lt;&gt;(User<span class="class">.<span class="keyword">class</span>), <span class="title">params</span>.<span class="title">toArray</span>())</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="核心实现"><a href="#核心实现" class="headerlink" title="核心实现"></a>核心实现</h4><p>这里的实现借助于分页列出所有用户的数据</p>
+
     </div>
 
     
@@ -299,7 +332,7 @@ Servlet进行判断-->允许访问index.jsp</pre>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体框架"><span class="nav-number">1.</span> <span class="nav-text">整体框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户数据"><span class="nav-number">2.</span> <span class="nav-text">用户数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要功能实现"><span class="nav-number">3.</span> <span class="nav-text">重要功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#管理员登入"><span class="nav-number">3.1.</span> <span class="nav-text">管理员登入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤器-Filter"><span class="nav-number">3.1.1.</span> <span class="nav-text">过滤器(Filter)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页查询所有用户数据"><span class="nav-number">3.2.</span> <span class="nav-text">分页查询所有用户数据</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户数据"><span class="nav-number">1.</span> <span class="nav-text">用户数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要功能实现"><span class="nav-number">2.</span> <span class="nav-text">重要功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#管理员登入"><span class="nav-number">2.1.</span> <span class="nav-text">管理员登入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤器-Filter"><span class="nav-number">2.1.1.</span> <span class="nav-text">过滤器(Filter)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页查询所有用户数据"><span class="nav-number">2.2.</span> <span class="nav-text">分页查询所有用户数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加新的数据"><span class="nav-number">2.3.</span> <span class="nav-text">增加新的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改用户数据"><span class="nav-number">2.4.</span> <span class="nav-text">更改用户数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除用户数据"><span class="nav-number">2.5.</span> <span class="nav-text">删除用户数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页查询用户数据"><span class="nav-number">2.6.</span> <span class="nav-text">分页查询用户数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL语句"><span class="nav-number">2.6.1.</span> <span class="nav-text">SQL语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#核心实现"><span class="nav-number">2.6.2.</span> <span class="nav-text">核心实现</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
